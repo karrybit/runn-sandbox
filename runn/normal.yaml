@@ -1,0 +1,18 @@
+desc: normal case
+debug: true
+runners:
+  api: http://localhost:8080
+vars:
+  data:
+    - json://data/hoge.json
+    - json://data/fuga.json
+    - json://data/piyo.json
+steps:
+  request:
+    loop: len(vars.data)
+    api:
+      /:
+        post:
+          body:
+            application/json: "{{ vars.data[i] }}"
+    test: current.res.status == 200
